@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true">
+  <!-- Sección de Login -->
+  <div class="login-container" *ngIf="!isLoggedIn">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Iniciar Sesión</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-button expand="block" (click)="login()" class="ion-margin-top">
+          Iniciar Sesión
+        </ion-button>
+        <ion-button expand="block" (click)="register()" fill="outline" class="ion-margin-top">
+          Registrarse
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Contenido del perfil (solo visible cuando está logueado) -->
+  <div class="profile-container" *ngIf="isLoggedIn">
+    <!-- Tarjeta de perfil -->
+    <div class="avatar-container">
+      <ion-avatar (click)="selectImage()">
+        <img *ngIf="profileImage; else defaultImage" [src]="profileImage" />
+        <ng-template #defaultImage>
+          <img src="assets/img/default-avatar.png" alt="Avatar por defecto" />
+        </ng-template>
+      </ion-avatar>
+    </div>
+    <ion-card class="profile-card">
+      <ion-card-header>
+        <ion-card-title>Perfil</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="profile-info">
+          <input [(ngModel)]="nombreUsuario" (blur)="guardarNombreUsuario()" placeholder="Nombre de Usuario" />
+          <input [(ngModel)]="correoElectronico" (blur)="guardarCorreoElectronico()" placeholder="Correo Electrónico" />
+        </div>
+        
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Tarjeta de opciones -->
+    <ion-card class="options-card">
+      <ion-card-title>
+        Puntos Acumulados: {{ puntosAcumulados | number:'1.0-2' }} puntos
+      </ion-card-title>
+      
+      
+      <ion-card-header>
+        <ion-card-title>Dirección</ion-card-title>
+        <input [(ngModel)]="direccion" (blur)="guardarDireccion()" placeholder="Dirección" />
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Añadir botón de cerrar sesión al final -->
+    <ion-button expand="block" (click)="logout()" color="danger" class="ion-margin-top">
+      Cerrar Sesión
+    </ion-button>
+  </div>
+</ion-content>
